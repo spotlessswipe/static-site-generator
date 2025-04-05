@@ -1,6 +1,6 @@
 import unittest
 
-from src.htmlnode import HTMLNode, LeafNode
+from src.htmlnode import HTMLNode, LeafNode, ParentNode
 
 
 class TestHTMLNode(unittest.TestCase):
@@ -79,6 +79,55 @@ class TestLeafNode(unittest.TestCase):
     def test_leaf_no_tag(self):
         node = LeafNode("", "Hello, world!")
         self.assertEqual(node.to_html(), "Hello, world!")
+
+class TestParentNode(unittest.TestCase):
+    def test_parent_to_html_p(self):
+        node = ParentNode(
+            "p",
+            [
+                LeafNode("b", "Bold text"),
+                LeafNode(None, "Normal text"),
+                LeafNode("i", "italic text"),
+                LeafNode(None, "Normal text"),
+            ]
+        )
+        self.assertEqual(node.to_html(), "<p><b>Bold text</b>Normal text<i>italic text</i>Normal text</p>")
+
+    def test_parent_to_html_link(self):
+        node = ParentNode(
+            "a",
+            [
+                LeafNode("b", "Bold text"),
+                LeafNode(None, "Normal text"),
+                LeafNode("i", "italic text"),
+                LeafNode(None, "Normal text"),
+            ],
+            {
+                "href": "https://www.google.com",
+                "target": "_blank",
+            }
+        )
+        self.assertEqual(
+            node.to_html(),
+            '<a href="https://www.google.com" target="_blank"><b>Bold text</b>Normal text<i>italic text</i>Normal text</a>'
+            )
+
+    def test_parent_no_value_raises_error(self):
+        with self.assertRaises(ValueError):
+            node = ParentNode("p", None)
+            node.to_html()
+
+        with self.assertRaises(ValueError):
+            node = ParentNode("p", [])
+            node.to_html()
+
+        with self.assertRaises(ValueError):
+            node = ParentNode(None, [LeafNode("b", "Bold text")])
+            node.to_html()
+
+        with self.assertRaises(ValueError):
+            node = ParentNode("", [LeafNode("b", "Bold text")])
+            node.to_html()
 
 if __name__ == "__main__":
     unittest.main()
