@@ -1,6 +1,6 @@
 import unittest
 
-from src.extract import extract_markdown_images, extract_markdown_link
+from src.extract import extract_markdown_images, extract_markdown_links
 
 
 class TestExtract(unittest.TestCase):
@@ -26,7 +26,7 @@ class TestExtract(unittest.TestCase):
 
     def test_link_extractor_links(self):
         text = "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)"
-        links = extract_markdown_link(text)
+        links = extract_markdown_links(text)
         self.assertEqual(
         links,
         [
@@ -36,7 +36,7 @@ class TestExtract(unittest.TestCase):
 
     def test_link_extractor_link_image(self):
         text = "This is text with a link [to boot dev](https://www.boot.dev) and ![to youtube](https://www.youtube.com/@bootdotdev)"
-        links = extract_markdown_link(text)
+        links = extract_markdown_links(text)
         self.assertEqual(
             links,
             [
