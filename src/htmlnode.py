@@ -1,5 +1,7 @@
 from libxml2mod import children
 
+from src.textnode import TextType, TextNode
+
 
 class HTMLNode:
     def __init__(
@@ -27,8 +29,8 @@ class HTMLNode:
 class LeafNode(HTMLNode):
     def __init__(
             self,
-            tag: str,
-            value: str,
+            tag: str|None,
+            value: str|None,
             props: dict[str, str] = None
     ):
         super().__init__(tag, value, [], props)
@@ -56,3 +58,20 @@ class ParentNode(HTMLNode):
             raise ValueError("LeafParent must have a children")
 
         return f"<{self.tag}{self.props_to_html()}>{''.join(i.to_html() for i in self.children)}</{self.tag}>"
+
+def text_node_to_html_node(text_node: TextNode):
+    match text_node.text_type:
+        case TextType.TEXT:
+            return LeafNode(None, text_node.text)
+        case TextType.BOLD:
+            return LeafNode('b', text_node.text)
+        case TextType.ITALIC:
+            return LeafNode('i', text_node.text)
+        case TextType.CODE:
+            return LeafNode('code', text_node.text)
+        case TextType.LINK:
+            return LeafNode('a', text_node.text, {'href': text_node.url})
+        case TextType.IMAGE:
+            return LeafNode('img', "", {'src': text_node.url, 'alt': text_node.text})
+        case _:
+            raise Exception('wrong text type for text node')
