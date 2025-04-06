@@ -126,10 +126,8 @@ def markdown_to_blocks(markdown: str):
 
     new_blocks = []
     for block in blocks:
-        print(block)
         cleaned_text = block.strip()
         if cleaned_text:
             new_blocks.append(cleaned_text)
-            print(cleaned_text)
 
     return new_blocks
