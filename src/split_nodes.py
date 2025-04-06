@@ -14,7 +14,6 @@ def split_nodes_delimiter(old_nodes: list[TextNode], delimiter: str, text_type: 
         if node.text_type != TextType.TEXT:
             new_nodes.append(node)
             continue
-
         matches = list(re.finditer(pattern, node.text))
 
         if not matches:
@@ -111,3 +110,13 @@ def split_nodes_link(old_nodes: list[TextNode]):
             current_text = sections[1]
 
     return new_nodes
+
+def text_to_textnodes(text):
+    text_nodes = [TextNode(text, TextType.TEXT)]
+    text_nodes = split_nodes_delimiter(text_nodes, "**", TextType.BOLD)
+    text_nodes = split_nodes_delimiter(text_nodes, "_", TextType.ITALIC)
+    text_nodes = split_nodes_delimiter(text_nodes, "`", TextType.CODE)
+    text_nodes = split_nodes_image(text_nodes)
+    text_nodes = split_nodes_link(text_nodes)
+
+    return text_nodes
