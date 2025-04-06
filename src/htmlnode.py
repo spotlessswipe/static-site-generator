@@ -1,5 +1,3 @@
-import re
-
 from src.blocks import split_markdown_to_blocks, TypeBlock, block_to_block_type
 from src.split_nodes import text_to_textnodes
 from src.textnode import TextType, TextNode
