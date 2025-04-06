@@ -1,7 +1,7 @@
 import unittest
 
-from src.split_nodes import split_nodes_delimiter, split_nodes_image, split_nodes_link, text_to_textnodes, \
-    markdown_to_blocks
+from src.blocks import markdown_to_blocks
+from src.split_nodes import split_nodes_delimiter, split_nodes_image, split_nodes_link, text_to_textnodes
 from src.textnode import TextType, TextNode
 
 
