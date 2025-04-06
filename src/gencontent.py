@@ -1,6 +1,5 @@
 import os
-
-from src.blocks import split_markdown_to_blocks
+from markdown_blocks import markdown_to_html_node
 
 
 def generate_page(from_path, template_path, dest_path):
@@ -13,7 +12,7 @@ def generate_page(from_path, template_path, dest_path):
     template = template_file.read()
     template_file.close()
 
-    node = split_markdown_to_blocks(markdown_content)
+    node = markdown_to_html_node(markdown_content)
     html = node.to_html()
 
     title = extract_title(markdown_content)
