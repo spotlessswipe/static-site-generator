@@ -1,6 +1,6 @@
 import unittest
 
-from src.blocks import markdown_to_blocks
+from src.blocks import split_markdown_to_blocks
 from src.split_nodes import split_nodes_delimiter, split_nodes_image, split_nodes_link, text_to_textnodes
 from src.textnode import TextType, TextNode
 
@@ -131,7 +131,7 @@ This is the same paragraph on a new line
 - This is a list
 - with items
 """
-        blocks = markdown_to_blocks(md)
+        blocks = split_markdown_to_blocks(md)
         self.assertEqual(
             blocks,
             [

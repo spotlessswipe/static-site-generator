@@ -77,7 +77,7 @@ def check_if_markdown_ordered_list(markdown: str):
             return True
 
 
-def markdown_to_blocks(markdown: str):
+def split_markdown_to_blocks(markdown: str):
     blocks = markdown.split('\n\n')
 
     new_blocks = []
